@@ -1,7 +1,7 @@
 // src/modules/notification/repositories/notification.repository.ts
 import { Injectable } from '@nestjs/common'; // Import Injectable
 import { InjectRepository } from '@nestjs/typeorm'; // Import InjectRepository
-import { Repository } from 'typeorm';
+import { DeleteResult, FindOneOptions, Repository } from 'typeorm';
 import { NotificationHistory } from '../entities/notification-history.entity';
 
 @Injectable() // Add Injectable decorator
@@ -60,5 +60,21 @@ export class NotificationRepository {
       .take(limit);
 
     return query.getManyAndCount();
+  }
+
+  /**
+   * Finds first entity that matches given options.
+   */
+  async findOne(options: FindOneOptions<NotificationHistory>): Promise<NotificationHistory | null> {
+    return this.historyRepository.findOne(options);
+  }
+
+  /**
+   * Deletes entities by a given criteria.
+   * Returns promise indicating if entity was found and deleted.
+   */
+  async delete(criteria: number | number[] | string | string[]): Promise<DeleteResult> {
+    // TypeORM's delete accepts various criteria, including just the ID(s)
+    return this.historyRepository.delete(criteria);
   }
 }

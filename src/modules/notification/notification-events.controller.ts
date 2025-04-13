@@ -3,7 +3,9 @@ import { Controller, Logger } from '@nestjs/common';
 import { EventPattern, Payload, Ctx, RmqContext } from '@nestjs/microservices'; // Keep imports
 import { NotificationEvent } from './notification-event.inteface';
 import { NotificationService } from './notification.service';
+import { ApiTags, ApiOperation } from '@nestjs/swagger'; // Import Swagger
 
+@ApiTags('Notification Events') // Group event handlers
 @Controller()
 export class NotificationEventsController {
   private readonly logger = new Logger(NotificationEventsController.name);
@@ -14,6 +16,10 @@ export class NotificationEventsController {
 
   // --- Specific Handlers (Keep the ack logic here) ---
   @EventPattern('application_received')
+  @ApiOperation({ // Describe the event handler
+    summary: 'Handles the "application_received" event',
+    description: 'Triggered when a new job application is received in the hiring pipeline. Sends notifications based on recipient role.',
+  })
   async handleApplicationReceived(@Payload() event: NotificationEvent, @Ctx() context: RmqContext): Promise<void> {
     const originalMessage = context.getMessage();
     this.logger.log(`>>> Handler 'application_received' INVOKED. Payload: ${JSON.stringify(event)}`);
@@ -26,6 +32,10 @@ export class NotificationEventsController {
   }
 
   @EventPattern('interview_scheduled')
+  @ApiOperation({
+    summary: 'Handles the "interview_scheduled" event',
+    description: 'Triggered when an interview is scheduled. Sends notifications (e.g., to candidate, interviewer).',
+  })
   async handleInterviewScheduled(@Payload() event: NotificationEvent, @Ctx() context: RmqContext): Promise<void> {
     const originalMessage = context.getMessage();
     this.logger.log(`>>> Handler 'interview_scheduled' INVOKED. Payload: ${JSON.stringify(event)}`);
@@ -39,6 +49,10 @@ export class NotificationEventsController {
 
   // Add similar logging and ack logic for offer_extended, system_alert...
    @EventPattern('offer_extended')
+   @ApiOperation({
+    summary: 'Handles the "offer_extended" event',
+    description: 'Triggered when a job offer is extended to a candidate.',
+  })
     async handleOfferExtended(@Payload() event: NotificationEvent, @Ctx() context: RmqContext): Promise<void> {
         const originalMessage = context.getMessage();
         this.logger.log(`>>> Handler 'offer_extended' INVOKED. Payload: ${JSON.stringify(event)}`);
@@ -51,6 +65,10 @@ export class NotificationEventsController {
     }
 
     @EventPattern('system_alert')
+    @ApiOperation({
+        summary: 'Handles the "system_alert" event',
+        description: 'Triggered for internal system alerts (e.g., high DB load). Sends notifications typically to admins.',
+      })
     async handleSystemAlert(@Payload() event: NotificationEvent, @Ctx() context: RmqContext): Promise<void> {
         const originalMessage = context.getMessage();
         this.logger.log(`>>> Handler 'system_alert' INVOKED. Payload: ${JSON.stringify(event)}`);
@@ -61,30 +79,4 @@ export class NotificationEventsController {
         this.logger.error(`Error processing system_alert: ${error.message}`, error.stack);
         }
     }
-
-
-//   // --- REMOVE OR COMMENT OUT CATCH-ALL HANDLER ---
-//   /** */
-//   @EventPattern(/.*/) // Matches any event pattern *not caught above*
-//   async handleAnyEvent(@Payload() data: any, @Ctx() context: RmqContext): Promise<void> {
-//       const originalMessage = context.getMessage();
-//       const rawContent = originalMessage.content.toString();
-//       const actualPattern = context.getPattern();
-
-//       this.logger.warn(`>>> CATCH-ALL HANDLER INVOKED <<<`);
-//       this.logger.warn(`>>> Matched Pattern (from context): ${actualPattern}`);
-//       this.logger.warn(`>>> Raw Message Content: ${rawContent}`);
-//       // ... other logging ...
-
-//       // Acknowledge the message
-//       const channel = context.getChannelRef();
-//       if (!channel.isClosed) {
-//           channel.ack(originalMessage); // This was likely causing the double-ack
-//           this.logger.warn(`Acknowledged message via CATCH-ALL handler.`);
-//       } else {
-//           this.logger.warn(`CATCH-ALL: Channel closed before ack.`);
-//       }
-//   }
-
-//   // --- End Catch-All Removal ---
 }

@@ -14,11 +14,11 @@ export class NotificationHistory {
 
   @ApiProperty({ description: 'Identifier of the recipient', example: 'candidate-123@example.com' }) // Add decorator
   @Column()
-  recipient_id: string;
+  recipientId: string;
 
   @ApiProperty({ description: 'Role of the recipient', example: 'candidate' }) // Add decorator
   @Column()
-  recipient_role: string;
+  recipientRole: string;
 
   @ApiProperty({ description: 'Data payload associated with the event', type: 'object', additionalProperties: true }) // Add decorator
   @Column('jsonb') // Use jsonb for better querying if needed
@@ -30,9 +30,9 @@ export class NotificationHistory {
 
   @ApiProperty({ description: 'Timestamp when the record was created' }) // Add decorator
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @ApiProperty({ description: 'Timestamp when the record was last updated' }) // Add decorator
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 }
