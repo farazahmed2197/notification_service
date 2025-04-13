@@ -4,9 +4,9 @@ import { NotificationModule } from './notification.module';
 import { NotificationEventsController } from './notification-events.controller';
 // import { MessageEventsController } from './message-events.controller';
 // Remove handler imports if they are not directly injected anywhere in this module
-import { ApplicationReceivedHandler } from './handlers/application-received.handler';
-import { InterviewScheduledHandler } from './handlers/interview-scheduled.handler';
-import { OfferExtendedHandler } from './handlers/offer-extended.handler';
+// import { ApplicationReceivedHandler } from './handlers/application-received.handler';
+// import { InterviewScheduledHandler } from './handlers/interview-scheduled.handler';
+// import { OfferExtendedHandler } from './handlers/offer-extended.handler';
 
 @Module({
   imports: [
