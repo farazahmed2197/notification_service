@@ -8,11 +8,7 @@ export class NotificationController {
   constructor(private readonly notificationService: NotificationService) {}
 
   @Post()
-  async sendNotification(@Body() notification: { 
-    to: string; 
-    type: string; 
-    data: Record<string, any> 
-  }): Promise<void> {
-    await this.notificationService.sendNotification(notification as NotificationEvent);
+  async sendNotification(@Body() notification: NotificationEvent): Promise<void> {
+    await this.notificationService.sendNotification(notification);
   }
 }

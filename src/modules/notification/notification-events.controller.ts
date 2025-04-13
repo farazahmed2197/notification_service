@@ -16,10 +16,16 @@ export class NotificationEventsController {
 
   // --- Specific Handlers (Keep the ack logic here) ---
   @EventPattern('application_received')
-  @ApiOperation({ // Describe the event handler
-    summary: 'Handles the "application_received" event',
-    description: 'Triggered when a new job application is received in the hiring pipeline. Sends notifications based on recipient role.',
+  @ApiOperation({
+    summary: '[LISTENER] Handles "application_received" event', // Prefix for clarity
+    description: `
+      Listens for messages on the configured RabbitMQ queue with a pattern matching 'application_received'.
+      This is **not** a callable HTTP endpoint.
+      The service expects a payload conforming to the NotificationEvent schema.
+      Triggered when a new job application is received. Sends notifications based on recipient role.
+    `,
   })
+
   async handleApplicationReceived(@Payload() event: NotificationEvent, @Ctx() context: RmqContext): Promise<void> {
     const originalMessage = context.getMessage();
     this.logger.log(`>>> Handler 'application_received' INVOKED. Payload: ${JSON.stringify(event)}`);
@@ -33,8 +39,13 @@ export class NotificationEventsController {
 
   @EventPattern('interview_scheduled')
   @ApiOperation({
-    summary: 'Handles the "interview_scheduled" event',
-    description: 'Triggered when an interview is scheduled. Sends notifications (e.g., to candidate, interviewer).',
+    summary: '[LISTENER] Handles "interview_scheduled" event',
+    description: `
+      Listens for messages on the configured RabbitMQ queue with a pattern matching 'interview_scheduled'.
+      This is **not** a callable HTTP endpoint.
+      Payload should conform to the NotificationEvent schema.
+      Triggered when an interview is scheduled. Sends notifications.
+    `,
   })
   async handleInterviewScheduled(@Payload() event: NotificationEvent, @Ctx() context: RmqContext): Promise<void> {
     const originalMessage = context.getMessage();
@@ -50,8 +61,13 @@ export class NotificationEventsController {
   // Add similar logging and ack logic for offer_extended, system_alert...
    @EventPattern('offer_extended')
    @ApiOperation({
-    summary: 'Handles the "offer_extended" event',
-    description: 'Triggered when a job offer is extended to a candidate.',
+    summary: '[LISTENER] Handles "offer_extended" event',
+    description: `
+      Listens for messages on the configured RabbitMQ queue with a pattern matching 'offer_extended'.
+      This is **not** a callable HTTP endpoint.
+      Payload should conform to the NotificationEvent schema.
+      Triggered when a job offer is extended.
+    `,
   })
     async handleOfferExtended(@Payload() event: NotificationEvent, @Ctx() context: RmqContext): Promise<void> {
         const originalMessage = context.getMessage();
@@ -66,8 +82,13 @@ export class NotificationEventsController {
 
     @EventPattern('system_alert')
     @ApiOperation({
-        summary: 'Handles the "system_alert" event',
-        description: 'Triggered for internal system alerts (e.g., high DB load). Sends notifications typically to admins.',
+        summary: '[LISTENER] Handles "system_alert" event',
+        description: `
+          Listens for messages on the configured RabbitMQ queue with a pattern matching 'system_alert'.
+          This is **not** a callable HTTP endpoint.
+          Payload should conform to the NotificationEvent schema.
+          Triggered for internal system alerts. Sends notifications to admins.
+        `,
       })
     async handleSystemAlert(@Payload() event: NotificationEvent, @Ctx() context: RmqContext): Promise<void> {
         const originalMessage = context.getMessage();

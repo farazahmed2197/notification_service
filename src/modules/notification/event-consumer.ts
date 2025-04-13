@@ -8,10 +8,6 @@ export class NotificationEventConsumer {
   constructor(private readonly notificationService: NotificationService) {}
 
   async consume(event: NotificationEvent): Promise<void> {
-    await this.notificationService.sendNotification({
-      to: event.recipient_id,
-      type: event.type,
-      data: event.data,
-    } as NotificationEvent);
+    await this.notificationService.sendNotification(event);
   }
 }
