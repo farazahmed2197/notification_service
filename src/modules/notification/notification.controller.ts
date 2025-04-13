@@ -1,6 +1,7 @@
 // src/modules/notification/notification.controller.ts
 import { Controller, Post, Body } from '@nestjs/common';
 import { NotificationService } from './notification.service';
+import { NotificationEvent } from './notification-event.inteface';
 
 @Controller('notification')
 export class NotificationController {
@@ -12,6 +13,6 @@ export class NotificationController {
     type: string; 
     data: Record<string, any> 
   }): Promise<void> {
-    await this.notificationService.sendNotification(notification);
+    await this.notificationService.sendNotification(notification as NotificationEvent);
   }
 }

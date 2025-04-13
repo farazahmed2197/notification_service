@@ -9,10 +9,6 @@ export class OfferExtendedHandler implements NotificationHandler<NotificationEve
     constructor(private readonly notificationService: NotificationService) { }
 
     async handle(event: NotificationEvent): Promise<void> {
-        await this.notificationService.sendNotification({
-            to: event.recipientId,
-            type: 'offer_extended',
-            data: event.data,
-        });
+        await this.notificationService.sendNotification(event);
     }
 }

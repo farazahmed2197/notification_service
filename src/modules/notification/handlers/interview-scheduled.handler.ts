@@ -9,10 +9,6 @@ export class InterviewScheduledHandler implements NotificationHandler<Notificati
   constructor(private readonly notificationService: NotificationService) {}
 
   async handle(event: NotificationEvent): Promise<void> {
-    await this.notificationService.sendNotification({
-      to: event.recipientId,
-      type: 'interview_scheduled',
-      data: event.data,
-    });
+    await this.notificationService.sendNotification(event);
   }
 }

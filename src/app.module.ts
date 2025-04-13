@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { appConfig } from './config/app.config';
 import { MessageQueueModule } from './modules/notification/message-queue.module';
+import { NotificationModule } from './modules/notification/notification.module'; // Import NotificationModule
 import { DataSourceOptions } from 'typeorm';
 
 @Module({
@@ -28,6 +29,7 @@ import { DataSourceOptions } from 'typeorm';
       },
     ]),
     MessageQueueModule,
+    NotificationModule
   ],
 })
 export class AppModule {}

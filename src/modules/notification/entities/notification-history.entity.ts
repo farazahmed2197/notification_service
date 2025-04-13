@@ -10,10 +10,10 @@ export class NotificationHistory {
   type: string;
 
   @Column()
-  recipientId: string;
+  recipient_id: string;
 
   @Column()
-  recipientRole: string;
+  recipient_role: string;
 
   @Column('json')
   data: Record<string, any>;
@@ -22,8 +22,8 @@ export class NotificationHistory {
   status: 'pending' | 'sent' | 'failed';
 
   @CreateDateColumn()
-  createdAt: Date;
+  created_at: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updated_at: Date;
 }

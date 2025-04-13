@@ -52,8 +52,8 @@ describe('MessageQueueConsumer', () => {
   it('should call ApplicationReceivedHandler for application_received event', async () => {
     const event: NotificationEvent = {
       type: 'application_received',
-      recipientId: 'candidate123',
-      recipientRole: 'candidate',
+      recipient_id: 'candidate123',
+      recipient_role: 'candidate',
       data: { applicationId: 'app456', jobTitle: 'Software Engineer' },
     };
 
@@ -68,8 +68,8 @@ describe('MessageQueueConsumer', () => {
   it('should call InterviewScheduledHandler for interview_scheduled event', async () => {
     const event: NotificationEvent = {
       type: 'interview_scheduled',
-      recipientId: 'candidate123',
-      recipientRole: 'candidate',
+      recipient_id: 'candidate123',
+      recipient_role: 'candidate',
       data: { interviewId: 'int789', time: '2024-07-20T10:00:00Z' },
     };
 
@@ -84,8 +84,8 @@ describe('MessageQueueConsumer', () => {
   it('should call OfferExtendedHandler for offer_extended event', async () => {
     const event: NotificationEvent = {
       type: 'offer_extended',
-      recipientId: 'candidate123',
-      recipientRole: 'candidate',
+      recipient_id: 'candidate123',
+      recipient_role: 'candidate',
       data: { offerId: 'offer012', deadline: '2024-07-30' },
     };
 
@@ -100,8 +100,8 @@ describe('MessageQueueConsumer', () => {
   it('should log unhandled event type for unknown events', async () => {
     const event: NotificationEvent = {
       type: 'unknown_event',
-      recipientId: 'user456',
-      recipientRole: 'manager',
+      recipient_id: 'user456',
+      recipient_role: 'manager',
       data: { info: 'some data' },
     };
 

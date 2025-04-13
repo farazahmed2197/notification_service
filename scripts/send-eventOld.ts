@@ -3,38 +3,41 @@ import * as amqp from 'amqplib';
 import { rabbitmqConfig } from '../src/config/rabbitmq.config'; // Adjust path if needed
 import { NotificationEvent } from '../src/modules/notification/notification-event.inteface'; // Adjust path
 
-// --- Sample Event Data (Ensure 'type' matches @EventPattern strings) ---
+// --- Sample Event Data (Keep this as is) ---
 const sampleEvents: Record<string, NotificationEvent> = {
   application_received: {
-    type: 'application_received', // This MUST match @EventPattern('application_received')
+    type: 'application_received', // Keep the type inside the data for your handler logic
     recipient_id: 'candidate-123@example.com',
     recipient_role: 'candidate',
-    data: { applicationId: `APP-${Date.now()}`, jobTitle: 'Software Engineer' },
+    data: {
+      applicationId: `APP-${Date.now()}`,
+      jobTitle: 'Software Engineer',
+      candidateName: 'Jane Doe',
+    },
   },
-  interview_scheduled_candidate: {
-    type: 'interview_scheduled', // This MUST match @EventPattern('interview_scheduled')
+  interview_scheduled: {
+    type: 'interview_scheduled',
     recipient_id: 'candidate-456@example.com',
     recipient_role: 'candidate',
-    data: { interviewId: `INT-${Date.now()}`, time: new Date().toISOString() },
-  },
-   interview_scheduled_manager: {
-    type: 'interview_scheduled', // This MUST match @EventPattern('interview_scheduled')
-    recipient_id: 'manager-xyz@example.com',
-    recipient_role: 'manager',
-    data: { interviewId: `INT-${Date.now()}`, time: new Date().toISOString() },
+    data: {
+      interviewId: `INT-${Date.now()}`,
+      jobTitle: 'Product Manager',
+      interviewer: 'John Smith',
+      time: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+      location: 'Virtual Meeting Link',
+    },
   },
   offer_extended: {
-    type: 'offer_extended', // This MUST match @EventPattern('offer_extended')
+    type: 'offer_extended',
     recipient_id: 'candidate-789@example.com',
     recipient_role: 'candidate',
-    data: { offerId: `OFF-${Date.now()}`, deadline: new Date().toISOString() },
+    data: {
+      offerId: `OFF-${Date.now()}`,
+      jobTitle: 'Data Scientist',
+      salary: 95000,
+      deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    },
   },
-  system_alert: {
-    type: 'system_alert', // This MUST match @EventPattern('system_alert')
-    recipient_id: 'admin@internal.com',
-    recipient_role: 'admin',
-    data: { code: 'DB_CONN_HIGH', severity: 'WARN' },
-  }
 };
 // --- End Sample Event Data ---
 

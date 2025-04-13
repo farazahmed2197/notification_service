@@ -36,15 +36,15 @@ describe('NotificationRepository', () => {
   });
 
   it('should save a notification', async () => {
-    const notificationData: Omit<NotificationHistory, 'id' | 'createdAt' | 'updatedAt'> = {
+    const notificationData: Omit<NotificationHistory, 'id' | 'created_at' | 'updated_at'> = {
       type: 'test',
-      recipientId: 'test@example.com',
-      recipientRole: 'test',
+      recipient_id: 'test@example.com',
+      recipient_role: 'test',
       data: {},
       status: 'pending',
     };
 
-    const createdNotification = { ...notificationData, id: 1, createdAt: new Date(), updatedAt: new Date() };
+    const createdNotification = { ...notificationData, id: 1, created_at: new Date(), updated_at: new Date() };
 
     // Configure mocks
     mockRepository.create.mockReturnValue(notificationData); // Mock create if needed, though save is often sufficient

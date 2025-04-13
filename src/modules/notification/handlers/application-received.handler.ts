@@ -9,10 +9,6 @@ export class ApplicationReceivedHandler implements NotificationHandler<Notificat
   constructor(private readonly notificationService: NotificationService) {}
 
   async handle(event: NotificationEvent): Promise<void> {
-    await this.notificationService.sendNotification({
-      to: event.recipientId,
-      type: 'application_received',
-      data: event.data,
-    });
+    await this.notificationService.sendNotification(event);
   }
 }

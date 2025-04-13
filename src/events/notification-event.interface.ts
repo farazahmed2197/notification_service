@@ -1,7 +1,7 @@
 // src/events/notification-event.interface.ts
 export interface NotificationEvent {
   type: string;
-  recipientId: string;
-  recipientRole: string;
+  recipient_id: string;
+  recipient_role: string;
   data: Record<string, any>;
 }
