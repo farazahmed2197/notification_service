@@ -10,7 +10,7 @@ A simple NestJS-based service that utilizes PostgreSQL and RabbitMQ for notifica
 
 Make sure the following are installed and properly configured:
 
-- **Node.js** (includes `npm`)
+- **Node.js** (includes `npm` and node version v20.16.0)
 - **Docker** and **Docker Compose** (usually bundled with Docker Desktop)
 - **Git** (optional, but recommended)
 
