@@ -96,11 +96,11 @@ You should see output confirming the app is running and connected to the databas
 
 ## Run the utility script to send pipeline events manually to test the app
 
-# Send an application_received event
+#### Send an application_received event
 ```npx ts-node scripts/send-event.ts application_received```
 
-# Send an interview_scheduled event
+#### Send an interview_scheduled event
 ``npx ts-node scripts/send-event.ts interview_scheduled``
 
-# Send an offer_extended event
+#### Send an offer_extended event
 ``npx ts-node scripts/send-event.ts offer_extended``
