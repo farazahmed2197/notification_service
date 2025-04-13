@@ -148,23 +148,25 @@ Testing: Includes unit tests for the service, repository, and HTTP controller us
 **Environment:**
 A local development environment with Node.js, npm, and Docker (for PostgreSQL & RabbitMQ) is available.
 Standard ports (5432 for Postgres, 5672/15672 for RabbitMQ, 3000 for HTTP) are available or configurable via .env.
+
 **Input (Events):**
 Events published to RabbitMQ will follow the { pattern: string, data: NotificationEvent } structure expected by NestJS.
 The data part (NotificationEvent) will reliably contain type, recipientId, recipientRole, and a data payload.
 The type field within NotificationEvent accurately reflects the event and matches the @EventPattern strings.
+
 **Notification Logic:**
 Routing notifications based solely on recipientRole (as implemented in NotificationFactory) is sufficient for this version. Real-world scenarios might require more complex logic (user preferences, event type specifics, etc.).
 The specific content/formatting within the Console and Email adapters is acceptable.
+
 **Adapters:**
 Console logging is a sufficient notification channel.
 The Email adapter requires separate configuration of valid SMTP credentials (or a testing service like Ethereal/Mailtrap) to actually send emails; the current implementation simulates sending via logs.
-**Persistence:**
-Storing the full event data payload as JSONB in the history is acceptable.
-Basic status tracking (pending, sent, failed) is sufficient.
+
 **Error Handling:**
 Manual message acknowledgement (noAck: false) in RabbitMQ handlers is desired for reliability.
 Logging errors and marking history as 'failed' is the primary error handling strategy. No automatic retry mechanisms or dead-letter queue configurations were implemented.
 If multiple adapters are used for one event, the overall status is marked 'failed' if any adapter fails.
+
 **History API:**
 Exposing GET (list, single) and DELETE operations for notification history is sufficient.
 Creating/Updating history records via the API is not required (history is generated internally).
